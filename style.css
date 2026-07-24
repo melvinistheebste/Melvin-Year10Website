@@ -8,8 +8,9 @@ html {
             rgb(40, 120, 70) 0%,
             rgb(25, 60, 40) 40%,
             rgb(15, 25, 20) 100%);
-
     background-attachment: fixed;
+    margin: 0;
+    padding: 0;
 }
 
 /* keep images within their containers */
@@ -79,8 +80,6 @@ img {
     min-width: 300px;
 }
 
-/* -------------------------------------------------- */
-
 /* Topic cards */
 .topic-card {
     background: rgba(25, 60, 40, 0.75);
@@ -90,21 +89,17 @@ img {
     border-radius: 20px;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
     border: 2px solid rgb(225, 140, 40);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: slideDown 0.6s ease-out;
 }
 
+/* Hover lift effect */
 .topic-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 16px rgba(225, 140, 40, 0.5);
+    transform: translateY(-8px);
+    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.4), 0 0 16px rgba(225, 140, 40, 0.5);
 }
 
-/* small hover lift */
-.topic-card:hover {
-    transform: translateY(-6px);
-}
-
-/* card text */
+/* Card text */
 .topic-card-text {
     font-size: 1.4em;
     margin-bottom: 0.5em;
@@ -141,9 +136,10 @@ img {
     margin: 0 auto;
     animation: slideDown 0.6s ease-out;
     white-space: nowrap;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* slide down when page loads */
+/* Slide down animation on load */
 @keyframes slideDown {
     from {
         opacity: 0;
