@@ -234,26 +234,6 @@ main {
     border-top-right-radius: 25px;
 }
 
-.nav-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 1.2em;
-    position: sticky;
-    top: 1em;
-    z-index: 100;
-    background: rgba(12, 24, 18, 0.78);
-    backdrop-filter: blur(12px);
-    padding: 0.6em 1.2em;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: var(--shadow);
-    width: fit-content;
-    margin: 0 auto;
-    animation: slideDown 0.6s ease-out;
-    white-space: nowrap;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -263,29 +243,6 @@ main {
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-.nav-tabs.hidden {
-    transform: translateY(-150%);
-    opacity: 0;
-}
-
-.nav-tabs a {
-    color: var(--accent);
-    text-decoration: none;
-    font-size: 1em;
-    font-weight: bold;
-    padding: 0.2em 0.8em;
-    border: 2px solid transparent;
-    border-radius: 20px;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
-}
-
-.nav-tabs a:hover {
-    background-color: var(--accent);
-    color: rgb(25, 60, 40);
-    transform: translateY(-3px);
-    box-shadow: 0 0 16px rgba(225, 140, 40, 0.5);
 }
 
 #scroll-top {
@@ -350,13 +307,6 @@ main {
         width: min(88%, 900px);
         font-size: 1.5em;
         padding: 0.45em 1.2em;
-    }
-
-    .nav-tabs {
-        flex-wrap: wrap;
-        gap: 0.6em;
-        padding: 0.7em 1em;
-        border-radius: 999px;
     }
 
     .hero {
