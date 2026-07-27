@@ -102,6 +102,18 @@
         let tabNavigationActive = false;
         let tabNavigationTimeout;
 
+        const finishTabNavigation = () => {
+            tabNavigationActive = false;
+            lastScroll = window.scrollY;
+        };
+
+        const keepNavigationVisible = () => {
+            tabNavigationActive = true;
+            navTabs.classList.remove('hidden');
+            clearTimeout(tabNavigationTimeout);
+            tabNavigationTimeout = setTimeout(finishTabNavigation, 500);
+        };
+
         const updateScrollControls = () => {
             const currentScroll = window.scrollY;
             const scrollDifference = currentScroll - lastScroll;
@@ -122,10 +134,7 @@
         window.addEventListener('scroll', () => {
             if (tabNavigationActive) {
                 clearTimeout(tabNavigationTimeout);
-                tabNavigationTimeout = setTimeout(() => {
-                    tabNavigationActive = false;
-                    lastScroll = window.scrollY;
-                }, 180);
+                tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
             }
 
             if (!scrollTicking) {
@@ -136,8 +145,7 @@
 
         navTabs.addEventListener('click', (event) => {
             if (event.target.closest('a')) {
-                tabNavigationActive = true;
-                navTabs.classList.remove('hidden');
+                keepNavigationVisible();
             }
         });
 
