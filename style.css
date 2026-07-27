@@ -51,6 +51,10 @@ main {
     padding-bottom: 2rem;
 }
 
+section {
+    scroll-margin-top: 7rem;
+}
+
 .hero {
     background-image: linear-gradient(120deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2)), url('images/Website header.png');
     min-height: 34vh;
@@ -234,6 +238,30 @@ main {
     border-top-right-radius: 25px;
 }
 
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+    position: fixed;
+    top: 0.9rem;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: linear-gradient(135deg, rgba(25, 60, 40, 0.94), rgba(12, 24, 18, 0.94));
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0.45rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), inset 0 1px rgba(255, 255, 255, 0.08);
+    width: fit-content;
+    max-width: calc(100% - 2rem);
+    margin: 0 auto;
+    animation: slideDown 0.6s ease-out;
+    white-space: nowrap;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -245,39 +273,56 @@ main {
     }
 }
 
-#scroll-top {
-    position: fixed;
-    bottom: 1.2em;
-    right: 1.2em;
-    width: 2.3em;
-    height: 2.3em;
-    font-size: 1.05em;
-    background: linear-gradient(135deg, rgba(34, 82, 56, 0.95), rgba(21, 47, 35, 0.95));
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: var(--accent);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 50%;
-    cursor: pointer;
+.nav-tabs.hidden {
+    transform: translateY(-150%);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.3s, transform 0.3s;
-    z-index: 200;
-    box-shadow: var(--shadow);
-    display: flex;
+}
+
+.nav-tabs a {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.78);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
-#scroll-top.visible {
-    opacity: 1;
-    pointer-events: auto;
+.nav-tab-mark {
+    width: 0.48rem;
+    height: 0.48rem;
+    border: 1px solid currentColor;
+    transform: rotate(45deg);
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-#scroll-top:hover {
-    transform: scale(1.1);
-    background: var(--accent);
+.nav-tabs a:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.nav-tabs a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.nav-tabs a.active {
     color: rgb(25, 60, 40);
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow: 0 6px 16px rgba(225, 140, 40, 0.3);
+}
+
+.nav-tabs a.active .nav-tab-mark {
+    background-color: currentColor;
+    transform: rotate(45deg) scale(0.72);
 }
 
 .fade-in {
@@ -309,6 +354,17 @@ main {
         padding: 0.45em 1.2em;
     }
 
+    .nav-tabs {
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+        max-width: calc(100% - 1.2rem);
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
     .hero {
         min-height: 28vh;
         height: auto;
@@ -321,6 +377,11 @@ main {
         min-height: 24vh;
         margin-top: -1.2em;
         padding: 1rem;
+    }
+
+    .nav-tabs a {
+        font-size: 0.82rem;
+        padding: 0.58rem 0.72rem;
     }
 
     .hero-content {
@@ -341,8 +402,4 @@ main {
         padding: 1.4em 1.2em;
     }
 
-    #scroll-top {
-        bottom: 0.9em;
-        right: 0.9em;
-    }
 }

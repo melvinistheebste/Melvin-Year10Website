@@ -8,10 +8,28 @@
 </head>
 
 <body>
+    <nav class="nav-tabs" aria-label="Portfolio sections">
+        <a href="#hero" class="active" aria-current="page">
+            <span class="nav-tab-mark" aria-hidden="true"></span>
+            Home
+        </a>
+        <a href="#image-creation">
+            <span class="nav-tab-mark" aria-hidden="true"></span>
+            Image Creation
+        </a>
+        <a href="#computer-science">
+            <span class="nav-tab-mark" aria-hidden="true"></span>
+            Computer Science
+        </a>
+        <a href="#3d-modelling">
+            <span class="nav-tab-mark" aria-hidden="true"></span>
+            3D Modelling
+        </a>
+    </nav>
+
     <main>
         <section class="hero" id="hero" aria-label="Featured banner">
             <div class="hero-content">
-                <p class="hero-eyebrow">Creative Digital Portfolio</p>
                 <h1>Melvin's Digital Showcase</h1>
                 <p>Pixel art, computer science, and 3D modelling.</p>
             </div>
@@ -70,41 +88,63 @@
         </section>
     </main>
 
-    <button id="scroll-top" aria-label="Scroll to top">&uarr;</button>
-
     <footer class="footer">
         <span class="footer-left">&copy; 2026 Melvin Showcase Website</span>
         <span class="footer-right">677</span>
     </footer>
 
     <script>
-        const scrollBtn = document.getElementById('scroll-top');
-        let lastScroll = window.pageYOffset;
-        let ticking = false;
+        const navTabs = document.querySelector('.nav-tabs');
+        let lastScroll = window.scrollY;
+        let scrollTicking = false;
+        let tabNavigationActive = false;
+        let tabNavigationTimeout;
 
-        const toggleScrollButton = () => {
-            const currentScroll = window.pageYOffset;
-            const scrollingDown = currentScroll > lastScroll && currentScroll > 60;
+        const finishTabNavigation = () => {
+            tabNavigationActive = false;
+            lastScroll = window.scrollY;
+        };
 
-            if (scrollingDown) {
-                scrollBtn.classList.remove('visible');
-            } else {
-                scrollBtn.classList.add('visible');
+        const keepNavigationVisible = () => {
+            tabNavigationActive = true;
+            navTabs.classList.remove('hidden');
+            clearTimeout(tabNavigationTimeout);
+            tabNavigationTimeout = setTimeout(finishTabNavigation, 500);
+        };
+
+        const updateScrollControls = () => {
+            const currentScroll = window.scrollY;
+            const scrollDifference = currentScroll - lastScroll;
+
+            if (tabNavigationActive || currentScroll <= 20 || scrollDifference > 6) {
+                navTabs.classList.remove('hidden');
+            } else if (scrollDifference < -6) {
+                navTabs.classList.add('hidden');
             }
 
-            lastScroll = currentScroll;
-            ticking = false;
+            if (Math.abs(scrollDifference) > 6) {
+                lastScroll = currentScroll;
+            }
+
+            scrollTicking = false;
         };
 
         window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(toggleScrollButton);
-                ticking = true;
+            if (tabNavigationActive) {
+                clearTimeout(tabNavigationTimeout);
+                tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
+            }
+
+            if (!scrollTicking) {
+                window.requestAnimationFrame(updateScrollControls);
+                scrollTicking = true;
             }
         }, { passive: true });
 
-        scrollBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        navTabs.addEventListener('click', (event) => {
+            if (event.target.closest('a')) {
+                keepNavigationVisible();
+            }
         });
 
         const fadeEls = document.querySelectorAll('.topic-title, .topic-card');
@@ -120,6 +160,37 @@
             element.classList.add('fade-in');
             observer.observe(element);
         });
+
+        const navLinks = [...document.querySelectorAll('.nav-tabs a')];
+        const sections = navLinks
+            .map((link) => document.querySelector(link.getAttribute('href')))
+            .filter(Boolean);
+
+        const updateActiveTab = () => {
+            const marker = window.scrollY + Math.min(window.innerHeight * 0.35, 260);
+            let activeSection = sections[0];
+
+            sections.forEach((section) => {
+                if (section.offsetTop <= marker) {
+                    activeSection = section;
+                }
+            });
+
+            navLinks.forEach((link) => {
+                const isActive = link.getAttribute('href') === `#${activeSection.id}`;
+                link.classList.toggle('active', isActive);
+
+                if (isActive) {
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', updateActiveTab, { passive: true });
+        window.addEventListener('resize', updateActiveTab);
+        updateActiveTab();
     </script>
 </body>
 
