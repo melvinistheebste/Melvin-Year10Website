@@ -1,4 +1,8 @@
 const navTabs = document.querySelector('.nav-tabs');
+const navLinks = Array.from(document.querySelectorAll('.nav-tabs a'));
+const topicCards = Array.from(document.querySelectorAll('.topic-card'));
+const fadeElements = document.querySelectorAll('.topic-title, .topic-card');
+
 let lastScroll = window.scrollY;
 let scrollTicking = false;
 let tabNavigationActive = false;
@@ -33,39 +37,50 @@ const updateScrollControls = () => {
     scrollTicking = false;
 };
 
-window.addEventListener('scroll', () => {
-    if (tabNavigationActive) {
-        clearTimeout(tabNavigationTimeout);
-        tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
-    }
+const createRipple = (element, event) => {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    element.appendChild(ripple);
 
-    if (!scrollTicking) {
-        window.requestAnimationFrame(updateScrollControls);
-        scrollTicking = true;
-    }
-}, { passive: true });
+    const size = Math.max(element.clientWidth, element.clientHeight);
+    ripple.style.width = `${size}px`;
+    ripple.style.height = `${size}px`;
 
-navTabs.addEventListener('click', (event) => {
+    const rect = element.getBoundingClientRect();
+    ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+    ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+
+    window.setTimeout(() => ripple.remove(), 700);
+};
+
+const addRippleEffect = (element) => {
+    element.addEventListener('click', (event) => createRipple(element, event));
+};
+
+const handleNavClick = (event) => {
     if (event.target.closest('a')) {
         keepNavigationVisible();
     }
-});
+};
 
-const fadeEls = document.querySelectorAll('.topic-title, .topic-card');
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
+const observeFadeElements = () => {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        },
+        { threshold: 0.15 }
+    );
+
+    fadeElements.forEach((element) => {
+        element.classList.add('fade-in');
+        observer.observe(element);
     });
-}, { threshold: 0.15 });
+};
 
-fadeEls.forEach((element) => {
-    element.classList.add('fade-in');
-    observer.observe(element);
-});
-
-const navLinks = [...document.querySelectorAll('.nav-tabs a')];
 const sections = navLinks
     .map((link) => document.querySelector(link.getAttribute('href')))
     .filter(Boolean);
@@ -92,6 +107,26 @@ const updateActiveTab = () => {
     });
 };
 
+window.addEventListener(
+    'scroll',
+    () => {
+        if (tabNavigationActive) {
+            clearTimeout(tabNavigationTimeout);
+            tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
+        }
+
+        if (!scrollTicking) {
+            window.requestAnimationFrame(updateScrollControls);
+            scrollTicking = true;
+        }
+    },
+    { passive: true }
+);
+
 window.addEventListener('scroll', updateActiveTab, { passive: true });
 window.addEventListener('resize', updateActiveTab);
+navTabs.addEventListener('click', handleNavClick);
+navLinks.forEach(addRippleEffect);
+topicCards.forEach(addRippleEffect);
+observeFadeElements();
 updateActiveTab();

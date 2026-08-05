@@ -289,15 +289,30 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.92);
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: 0.01em;
-    padding: 0.65rem 0.9rem;
-    border: 1px solid transparent;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 999px;
-    transition: background-color 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-tabs a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
 }
 
 .nav-tab-mark {
@@ -309,9 +324,14 @@ section {
 }
 
 .nav-tabs a:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.14);
     color: var(--accent);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.08);
+}
+
+.nav-tabs a:hover::after {
+    opacity: 1;
 }
 
 .nav-tabs a:focus-visible {
@@ -323,12 +343,40 @@ section {
     color: rgb(25, 60, 40);
     background: linear-gradient(135deg, var(--accent), var(--accent-strong));
     border-color: rgba(255, 255, 255, 0.28);
-    box-shadow: 0 6px 16px rgba(225, 140, 40, 0.3);
+    box-shadow: 0 18px 35px rgba(247, 141, 2, 0.28);
+    transform: translateY(-1px);
+    animation: pulseGlow 2.2s ease-in-out infinite;
 }
 
 .nav-tabs a.active .nav-tab-mark {
     background-color: currentColor;
     transform: rotate(45deg) scale(0.72);
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.45);
+    transform: scale(0);
+    opacity: 0.9;
+    pointer-events: none;
+    animation: ripple 0.7s ease-out forwards;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 18px 35px rgba(247, 141, 2, 0.28);
+    }
+    50% {
+        box-shadow: 0 24px 50px rgba(247, 141, 2, 0.42);
+    }
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(2.6);
+        opacity: 0;
+    }
 }
 
 .fade-in {
