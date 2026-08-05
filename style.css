@@ -170,6 +170,12 @@ section {
     min-width: 280px;
 }
 
+.topic-content.flex-center .topic-card.animation-card {
+    width: auto;
+    min-width: 0;
+    max-width: 420px;
+}
+
 .topic-card {
     background: linear-gradient(145deg, rgba(29, 68, 49, 0.95), rgba(16, 38, 28, 0.95));
     backdrop-filter: blur(10px);
