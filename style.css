@@ -7,6 +7,11 @@
     --accent-strong: rgb(247, 141, 2);
     --text-light: #f7f7f7;
     --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    --squircle-radius: 30px;
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.16);
+    --glass-highlight: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
 }
 
 * {
@@ -19,9 +24,9 @@ html {
     margin: 0;
     padding: 0;
     min-height: 100%;
-    background: radial-gradient(circle at top left, rgba(255, 180, 70, 0.18), transparent 28%),
+    background: radial-gradient(circle at top left, rgba(255, 180, 70, 0.20), transparent 30%),
         radial-gradient(circle at top right, rgba(82, 255, 180, 0.16), transparent 24%),
-        linear-gradient(135deg, rgb(12, 26, 22) 0%, rgb(22, 54, 39) 45%, var(--bg-dark) 100%);
+        linear-gradient(145deg, #07140f 0%, #123524 48%, #060d0a 100%);
     background-attachment: fixed;
     color: var(--text-light);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -40,10 +45,23 @@ body::before {
     z-index: 0;
 }
 
+body::after {
+    content: "";
+    position: fixed;
+    inset: -20%;
+    background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.04), transparent 20%),
+        radial-gradient(circle at 30% 80%, rgba(255,255,255,0.05), transparent 22%);
+    filter: blur(26px);
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+}
+
 img {
     display: block;
     width: 100%;
-    border-radius: 14px;
+    border-radius: calc(var(--squircle-radius) - 10px);
     height: auto;
 }
 
@@ -66,8 +84,8 @@ section {
     align-items: center;
     position: relative;
     margin-top: -3em;
-    border-bottom-left-radius: 28px;
-    border-bottom-right-radius: 28px;
+    border-bottom-left-radius: var(--squircle-radius);
+    border-bottom-right-radius: var(--squircle-radius);
     box-shadow: var(--shadow);
     overflow: hidden;
     padding: 2rem;
@@ -104,11 +122,28 @@ section {
     text-align: center;
     max-width: 720px;
     padding: 1.2rem 1.5rem;
-    background: rgba(10, 24, 18, 0.45);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.16);
-    border-radius: 22px;
-    box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    backdrop-filter: blur(12px) saturate(100%);
+    -webkit-backdrop-filter: blur(12px) saturate(100%);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--squircle-radius);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.34), 0 18px 40px rgba(0,0,0,0.22);
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.hero-content::before,
+.topic-title::before,
+.topic-card::before,
+.nav-tabs::before,
+.nav-tabs a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 35%, rgba(255,255,255,0.02) 65%, rgba(255,255,255,0.16) 100%);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: -1;
 }
 
 .hero-eyebrow {
@@ -140,13 +175,17 @@ section {
     position: relative;
     font-size: 2em;
     padding: 0.45em 1.6em;
-    background: linear-gradient(135deg, rgba(34, 82, 56, 0.95), rgba(21, 47, 35, 0.95));
-    backdrop-filter: blur(8px);
-    border-radius: 999px;
-    box-shadow: var(--shadow);
-    border: 2px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    backdrop-filter: blur(8px) saturate(95%);
+    -webkit-backdrop-filter: blur(8px) saturate(95%);
+    border-radius: var(--squircle-radius);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.32), 0 16px 32px rgba(0,0,0,0.24);
+    border: 1px solid var(--glass-border);
     width: min(70%, 900px);
     margin: 2em auto 0;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
 }
 
 .topic-content {
@@ -177,14 +216,18 @@ section {
 }
 
 .topic-card {
-    background: linear-gradient(145deg, rgba(29, 68, 49, 0.95), rgba(16, 38, 28, 0.95));
-    backdrop-filter: blur(10px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    backdrop-filter: blur(8px) saturate(100%);
+    -webkit-backdrop-filter: blur(8px) saturate(100%);
     color: var(--text-light);
     padding: 1.2em;
-    border-radius: 22px;
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--squircle-radius);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 16px 36px rgba(0,0,0,0.22);
+    border: 1px solid var(--glass-border);
     transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, filter 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
     animation: slideDown 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
     overflow: hidden;
     will-change: transform, box-shadow;
@@ -195,8 +238,9 @@ section {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 35%);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 38%);
     pointer-events: none;
+    z-index: 0;
 }
 
 .topic-card:hover {
@@ -236,12 +280,13 @@ section {
 .footer {
     display: flex;
     justify-content: space-between;
-    background: var(--panel-dark);
-    backdrop-filter: blur(8px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
     color: var(--accent-strong);
     padding: 3em 3em;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
+    border-top-left-radius: var(--squircle-radius);
+    border-top-right-radius: var(--squircle-radius);
 }
 
 .nav-tabs {
@@ -253,13 +298,13 @@ section {
     left: 0;
     right: 0;
     z-index: 100;
-    background: linear-gradient(135deg, rgba(25, 60, 40, 0.94), rgba(12, 24, 18, 0.94));
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    backdrop-filter: blur(10px) saturate(100%);
+    -webkit-backdrop-filter: blur(10px) saturate(100%);
     padding: 0.45rem;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.38), inset 0 1px rgba(255, 255, 255, 0.08);
+    border-radius: var(--squircle-radius);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), 0 16px 34px rgba(0, 0, 0, 0.28);
     width: fit-content;
     max-width: calc(100% - 2rem);
     margin: 0 auto;
@@ -295,10 +340,10 @@ section {
     font-weight: 700;
     letter-spacing: 0.01em;
     padding: 0.75rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: calc(var(--squircle-radius) - 8px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
     transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
     position: relative;
     overflow: hidden;
@@ -308,7 +353,7 @@ section {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 999px;
+    border-radius: inherit;
     background: rgba(255, 255, 255, 0.08);
     opacity: 0;
     transition: opacity 0.25s ease;
@@ -324,10 +369,10 @@ section {
 }
 
 .nav-tabs a:hover {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.2);
     color: var(--accent);
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 24px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .nav-tabs a:hover::after {
