@@ -122,6 +122,7 @@ section {
     text-align: center;
     max-width: 720px;
     padding: 1.2rem 1.5rem;
+    margin-top: 3rem;
     background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
     backdrop-filter: blur(12px) saturate(100%);
     -webkit-backdrop-filter: blur(12px) saturate(100%);
@@ -397,6 +398,97 @@ section {
 .nav-tabs a.active .nav-tab-mark {
     background-color: currentColor;
     transform: rotate(45deg) scale(0.72);
+}
+
+.text-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    min-width: 280px;
+    height: auto;
+}
+
+.text-box {
+    display: block;
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--squircle-radius);
+    padding: 1.2rem;
+    color: var(--text-light);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    word-break: break-word;
+    width: 100%;
+    min-height: 150px;
+    transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    backdrop-filter: blur(8px) saturate(100%);
+    -webkit-backdrop-filter: blur(8px) saturate(100%);
+}
+
+.text-box::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.text-box:focus {
+    outline: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(225, 140, 40, 0.4), inset 0 1px 0 rgba(255,255,255,0.24);
+}
+
+.text-box:hover:not(:focus) {
+    border-color: rgba(255, 255, 255, 0.28);
+    background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    z-index: 50;
+    box-shadow: 0 12px 28px rgba(247, 141, 2, 0.3), inset 0 1px 0 rgba(255,255,255,0.24);
+}
+
+.scroll-to-top::before {
+    content: "";
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 2px solid rgb(25, 60, 40);
+    border-right: none;
+    border-bottom: none;
+    transform: rotate(45deg);
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 16px 36px rgba(247, 141, 2, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.scroll-to-top:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 0 8px 20px rgba(247, 141, 2, 0.3), inset 0 1px 0 rgba(255,255,255,0.24);
 }
 
 .ripple {

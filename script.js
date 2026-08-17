@@ -1,4 +1,24 @@
 const navTabs = document.querySelector('.nav-tabs');
+const scrollToTopButton = document.getElementById('scroll-to-top');
+
+const toggleScrollToTop = () => {
+    if (window.scrollY > 300) {
+        scrollToTopButton.classList.add('visible');
+    } else {
+        scrollToTopButton.classList.remove('visible');
+    }
+};
+
+const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+};
+
+scrollToTopButton.addEventListener('click', scrollToTop);
+window.addEventListener('scroll', toggleScrollToTop);
+
 const navLinks = Array.from(document.querySelectorAll('.nav-tabs a'));
 const topicCards = Array.from(document.querySelectorAll('.topic-card'));
 const fadeElements = document.querySelectorAll('.topic-title, .topic-card');
