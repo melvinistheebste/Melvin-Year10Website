@@ -6,13 +6,13 @@
     <link rel="icon" type="image/png" href="images/nav icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Aldrich&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Silkscreen:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Silkscreen:wght@400;700&display=swap"></noscript>
     <link rel="preload" as="image" href="images/red and blue.jpg" fetchpriority="high">
     <link rel="stylesheet" href="style.css">
     <title>~Melvin Digi Showcase~</title>
 </head>
-<body class="aldrich-regular">
+<body>
     <nav class="nav-tabs" aria-label="Portfolio sections">
         <a href="#hero" class="active" aria-current="page">
             <span class="nav-tab-mark" aria-hidden="true"></span>
@@ -43,8 +43,8 @@
     <main>
         <section class="hero" id="hero" aria-label="Featured banner">
             <div class="hero-content">
-                <h1 class="silkscreen-regular">Melvin's   Digital   Showcase</h1>
-                <p>Pixel art,  Computer Science,  Programming Python,  3D Modelling,  and  Animation.</p>
+                <h1 class="silkscreen-regular">Melvin's Digital Showcase</h1>
+                <p>Pixel art, Computer Science, Programming Python, 3D Modelling, and Animation.</p>
             </div>
         </section>
 
@@ -61,6 +61,7 @@
                         width="48"
                         height="48"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Pixel Art</h2>
@@ -73,6 +74,7 @@
                         width="32"
                         height="32"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Pixel Art</h2>
@@ -85,6 +87,7 @@
                         width="1920"
                         height="1080"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Background Creation</h2>
@@ -106,10 +109,11 @@
                             width="1280"
                             height="1100"
                             loading="lazy"
+                            fetchpriority="low"
                             decoding="async"
                         >
                     </a>
-                    <h2 class="topic-card-text">Binary and Hexadecimal Dragon</h2>
+                    <h2 class="topic-card-text">Dragon: Binary and Hexadecimal</h2>
                 </div>
             </div>
         </section>
@@ -128,6 +132,7 @@
                             width="575"
                             height="699"
                             loading="lazy"
+                            fetchpriority="low"
                             decoding="async"
                         >
                     </a>
@@ -136,8 +141,8 @@
                 <div class="topic-card text-card">
                     <div class="text-box">
                         I started learning Python through a beginner course to understand the basics of coding.
-                        I am still learning things like user input, if statements, and loops work. So far, 
-                        I have learned how to write simple code and understand how programs work.
+                        I am still learning how user input, if statements, and loops work. So far,
+                        I have learned to write simple code and understand how programs work.
                         In the future, I want to keep learning Python and use my skills to make simple apps,
                         scripts, and other projects.
                     </div>
@@ -158,6 +163,7 @@
                         width="1920"
                         height="1080"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Snow Man</h2>
@@ -170,6 +176,7 @@
                         width="1920"
                         height="1080"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Car</h2>
@@ -190,6 +197,7 @@
                         width="551"
                         height="304"
                         loading="lazy"
+                        fetchpriority="low"
                         decoding="async"
                     >
                     <h2 class="topic-card-text">Animation GIF</h2>

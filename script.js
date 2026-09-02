@@ -1,12 +1,8 @@
     const navTabs = document.querySelector('.nav-tabs');
+    const main = document.querySelector('main');
     const scrollToTopButton = document.getElementById('scroll-to-top');
     const navLinks = Array.from(document.querySelectorAll('.nav-tabs a'));
-    const topicCards = Array.from(document.querySelectorAll('.topic-card'));
     const fadeElements = document.querySelectorAll('.topic-title, .topic-card');
-
-    if (!navTabs || !navLinks.length) {
-        return;
-    }
 
     let lastScroll = window.scrollY;
     let scrollTicking = false;
@@ -40,7 +36,7 @@
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
         });
     };
 
@@ -80,13 +76,20 @@
         window.setTimeout(() => ripple.remove(), 700);
     };
 
-    const addRippleEffect = (element) => {
-        element.addEventListener('click', (event) => createRipple(element, event));
+    const handleNavClick = (event) => {
+        const link = event.target.closest('a');
+
+        if (link) {
+            keepNavigationVisible();
+            createRipple(link, event);
+        }
     };
 
-    const handleNavClick = (event) => {
-        if (event.target.closest('a')) {
-            keepNavigationVisible();
+    const handleMainClick = (event) => {
+        const card = event.target.closest('.topic-card');
+
+        if (card) {
+            createRipple(card, event);
         }
     };
 
@@ -164,8 +167,7 @@
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateActiveTab);
     navTabs.addEventListener('click', handleNavClick);
-    navLinks.forEach(addRippleEffect);
-    topicCards.forEach(addRippleEffect);
+    main.addEventListener('click', handleMainClick);
     observeFadeElements();
     toggleScrollToTop();
     updateActiveTab();
