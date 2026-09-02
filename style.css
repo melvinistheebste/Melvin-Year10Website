@@ -6,9 +6,20 @@
     --glass-border: rgba(255, 255, 255, 0.16);
 }
 
-.jetbrains-mono {
-    font-family: "JetBrains Mono", monospace;
-    font-optical-sizing: auto;
+.silkscreen-regular {
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.silkscreen-bold {
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.aldrich-regular {
+    font-family: "Aldrich", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
@@ -419,7 +430,7 @@ section {
     border-radius: var(--squircle-radius);
     padding: 1.2rem;
     color: var(--text-light);
-    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-family: inherit;
     font-size: 0.95rem;
     line-height: 1.6;
     word-wrap: break-word;
@@ -518,7 +529,7 @@ section {
 @media (max-width: 900px) {
     .topic-content {
         grid-template-columns: 1fr;
-        width: min(88%, 900px);
+        width: min(92%, 900px);
         gap: 1.5rem;
     }
 
@@ -528,7 +539,7 @@ section {
     }
 
     .topic-title {
-        width: min(88%, 900px);
+        width: min(92%, 900px);
         font-size: 1.5em;
         padding: 0.45em 1.2em;
     }
@@ -537,7 +548,9 @@ section {
         justify-content: flex-start;
         overflow-x: auto;
         scrollbar-width: none;
-        max-width: calc(100% - 1.2rem);
+        width: calc(100% - 1rem);
+        max-width: none;
+        touch-action: pan-x;
     }
 
     .nav-tabs::-webkit-scrollbar {
@@ -552,9 +565,18 @@ section {
 }
 
 @media (max-width: 600px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    body::before,
+    body::after {
+        display: none;
+    }
+
     .hero {
         min-height: 24vh;
-        margin-top: -1.2em;
+        margin-top: 0;
         padding: 1rem;
     }
 
@@ -565,6 +587,8 @@ section {
 
     .hero-content {
         padding: 1rem;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     .hero h1 {
@@ -573,6 +597,15 @@ section {
 
     .topic-card {
         padding: 1rem;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .topic-title,
+    .text-box,
+    .footer {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     .footer {
