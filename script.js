@@ -48,8 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollToTopButton) {
         scrollToTopButton.addEventListener('click', scrollToTop);
     }
-    window.addEventListener('scroll', toggleScrollToTop, { passive: true });
-
     const updateScrollControls = () => {
         const currentScroll = window.scrollY;
         const scrollDifference = currentScroll - lastScroll;
@@ -94,11 +92,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const observeFadeElements = () => {
+        if (!('IntersectionObserver' in window)) {
+            fadeElements.forEach((element) => element.classList.add('visible'));
+            return;
+        }
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
                     }
                 });
             },
@@ -141,23 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    window.addEventListener(
-        'scroll',
-        () => {
-            if (tabNavigationActive) {
-                clearTimeout(tabNavigationTimeout);
-                tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
-            }
+    const handleScroll = () => {
+        if (tabNavigationActive) {
+            clearTimeout(tabNavigationTimeout);
+            tabNavigationTimeout = setTimeout(finishTabNavigation, 180);
+        }
 
-            if (!scrollTicking) {
-                window.requestAnimationFrame(updateScrollControls);
-                scrollTicking = true;
-            }
-        },
-        { passive: true }
-    );
+        if (!scrollTicking) {
+            window.requestAnimationFrame(() => {
+                updateScrollControls();
+                toggleScrollToTop();
+                updateActiveTab();
+                scrollTicking = false;
+            });
+            scrollTicking = true;
+        }
+    };
 
-    window.addEventListener('scroll', updateActiveTab, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', updateActiveTab);
     navTabs.addEventListener('click', handleNavClick);
     navLinks.forEach(addRippleEffect);

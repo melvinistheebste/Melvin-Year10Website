@@ -1,19 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-
 :root {
     --bg-dark: rgb(11, 15, 28);
-    --panel-dark: rgba(20, 28, 52, 0.8);
     --accent: rgb(255, 76, 76);
     --accent-strong: rgb(224, 38, 53);
     --secondary-accent: rgb(76, 130, 255);
-    --secondary-accent-soft: rgb(49, 92, 210);
     --text-light: #edf5ff;
-    --shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     --squircle-radius: 30px;
-    --glass-bg: rgba(255, 255, 255, 0.08);
     --glass-border: rgba(255, 255, 255, 0.16);
-    --glass-highlight: rgba(255, 255, 255, 0.18);
-    --glass-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
 }
 
 * {
@@ -35,7 +27,7 @@ html {
         linear-gradient(145deg, #090d1a 0%, #111d38 35%, #1d1630 65%, #0a0f1d 100%);
     background-attachment: fixed;
     color: var(--text-light);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     position: relative;
     overflow-x: hidden;
     line-height: 1.5;
@@ -94,6 +86,8 @@ main {
 
 section {
     scroll-margin-top: 7rem;
+    content-visibility: auto;
+    contain-intrinsic-size: 500px;
 }
 
 .hero {
@@ -171,18 +165,9 @@ section {
     border-radius: inherit;
 }
 
-.hero-eyebrow {
-    margin: 0 0 0.4rem;
-    text-transform: uppercase;
-    letter-spacing: 0.25em;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent);
-}
-
 .hero h1 {
     margin: 0 0 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-size: clamp(1.8rem, 3vw, 2.8rem);
     color: #ffffff;
     text-shadow: 0 0 18px rgba(76, 130, 255, 0.6);
@@ -196,7 +181,7 @@ section {
 }
 
 .topic-title {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     color: var(--text-light);
     text-align: center;
     position: relative;
@@ -255,7 +240,6 @@ section {
     overflow: hidden;
     isolation: isolate;
     animation: slideDown 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
-    will-change: transform, box-shadow;
 }
 
 .topic-card::before {
@@ -293,12 +277,6 @@ section {
     margin: 0.35rem 0;
     text-align: center;
     line-height: 1.45;
-}
-
-.topic-card h1,
-.topic-card h2 {
-    font-size: 1.3rem;
-    margin: 0 0 0.35rem;
 }
 
 .footer {
@@ -438,7 +416,7 @@ section {
     border-radius: var(--squircle-radius);
     padding: 1.2rem;
     color: var(--text-light);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: 0.95rem;
     line-height: 1.6;
     word-wrap: break-word;
@@ -450,22 +428,6 @@ section {
     transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
     backdrop-filter: blur(8px) saturate(100%);
     -webkit-backdrop-filter: blur(8px) saturate(100%);
-}
-
-.text-box::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.text-box:focus {
-    outline: none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border-color: var(--accent);
-    box-shadow: 0 0 20px rgba(225, 140, 40, 0.4), inset 0 1px 0 rgba(255,255,255,0.24);
-}
-
-.text-box:hover:not(:focus) {
-    border-color: rgba(255, 255, 255, 0.28);
-    background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
 }
 
 .scroll-to-top {
@@ -616,4 +578,15 @@ section {
         padding: 1.4em 1.2em;
     }
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
