@@ -1,8 +1,6 @@
 :root {
-    --bg-dark: rgb(11, 15, 28);
     --accent: rgb(255, 76, 76);
     --accent-strong: rgb(224, 38, 53);
-    --secondary-accent: rgb(76, 130, 255);
     --text-light: #edf5ff;
     --squircle-radius: 30px;
     --glass-border: rgba(255, 255, 255, 0.16);

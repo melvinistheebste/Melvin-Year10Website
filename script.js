@@ -1,4 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
     const navTabs = document.querySelector('.nav-tabs');
     const scrollToTopButton = document.getElementById('scroll-to-top');
     const navLinks = Array.from(document.querySelectorAll('.nav-tabs a'));
@@ -170,4 +169,3 @@ document.addEventListener('DOMContentLoaded', () => {
     observeFadeElements();
     toggleScrollToTop();
     updateActiveTab();
-});
