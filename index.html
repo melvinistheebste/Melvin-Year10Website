@@ -8,11 +8,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Silkscreen:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aldrich&family=Silkscreen:wght@400;700&display=swap"></noscript>
-    <link rel="preload" as="image" href="images/red and blue.jpg" fetchpriority="high">
     <link rel="stylesheet" href="style.css">
     <title>~Melvin Digi Showcase~</title>
 </head>
 <body>
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <nav class="nav-tabs" aria-label="Portfolio sections">
         <a href="#hero" class="active" aria-current="page">
             <span class="nav-tab-mark" aria-hidden="true"></span>
@@ -28,7 +28,7 @@
         </a>
         <a href="#python">
             <span class="nav-tab-mark" aria-hidden="true"></span>
-            Programming Python
+            Python
         </a>
         <a href="#3d-modelling">
             <span class="nav-tab-mark" aria-hidden="true"></span>
@@ -38,19 +38,39 @@
             <span class="nav-tab-mark" aria-hidden="true"></span>
             Animation
         </a>
+        <a href="#flappy-bird">
+            <span class="nav-tab-mark" aria-hidden="true"></span>
+            Flappy Bird
+        </a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch colour mode">
+            <span aria-hidden="true">&#9788;</span>
+        </button>
     </nav>
 
     <main>
         <section class="hero" id="hero" aria-label="Featured banner">
             <div class="hero-content">
+                <div class="title-card-art" aria-hidden="true"></div>
+                <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> MELVIN / DIGITAL LAB</div>
                 <h1 class="silkscreen-regular">Melvin's Digital Showcase</h1>
                 <p>Pixel art, Computer Science, Programming Python, 3D Modelling, and Animation.</p>
+                <div class="hero-actions">
+                    <a class="hero-action primary-action" href="#image-creation">Explore the work <span aria-hidden="true">&#8595;</span></a>
+                    <a class="hero-action" href="#python">View the code <span aria-hidden="true">&#123; &#125;</span></a>
+                </div>
+                <div class="hero-stats" aria-label="Showcase statistics">
+                    <div><strong>06</strong><span>creative zones</span></div>
+                    <div><strong>03</strong><span>code languages</span></div>
+                    <div><strong>infinity</strong><span>ideas loading</span></div>
+                </div>
             </div>
         </section>
 
         <section id="image-creation" class="topic">
             <div class="topic-title">
+                <span class="section-index">01</span>
                 <h1>Image Creation</h1>
+                <span class="section-kicker">PIXELS / COMPOSITION</span>
             </div>
             <div class="topic-content">
                 <div class="topic-card">
@@ -97,7 +117,9 @@
 
         <section id="computer-science" class="topic">
             <div class="topic-title">
+                <span class="section-index">02</span>
                 <h1>Computer Science</h1>
+                <span class="section-kicker">BINARY / LOGIC</span>
             </div>
             <div class="topic-content flex-center">
                 <div class="topic-card">
@@ -120,7 +142,9 @@
 
         <section id="python" class="topic">
             <div class="topic-title">
-                <h1>Programming with Python</h1>
+                <span class="section-index">03</span>
+                <h1>Python</h1>
+                <span class="section-kicker">CODE / BUILD</span>
             </div>
             <div class="topic-content flex-center">
                 <div class="topic-card">
@@ -152,7 +176,9 @@
 
         <section id="3d-modelling" class="topic">
             <div class="topic-title">
+                <span class="section-index">04</span>
                 <h1>3D Modelling</h1>
+                <span class="section-kicker">FORM / SPACE</span>
             </div>
             <div class="topic-content flex-center">
                 <div class="topic-card">
@@ -186,7 +212,9 @@
 
         <section id="Animation" class="topic">
             <div class="topic-title">
+                <span class="section-index">05</span>
                 <h1>Animation</h1>
+                <span class="section-kicker">MOTION / TIME</span>
             </div>
             <div class="topic-content flex-center">
                 <div class="topic-card animation-card">
@@ -204,6 +232,19 @@
                 </div>
             </div>
         </section>
+        <section id="flappy-bird" class="topic arcade-topic">
+            <div class="topic-title">
+                <span class="section-index">06</span>
+                <h1>Flappy Bird</h1>
+                <span class="section-kicker">ARCADE / REACTION</span>
+            </div>
+            <div class="topic-content flex-center">
+                <div class="arcade" aria-label="Flappy Bird mini game">
+                    <div class="arcade-header"><span>ARCADE // NOANONOA</span><a href="https://github.com/noanonoa/flappy-bird" target="_blank" rel="noopener noreferrer">SOURCE &#8599;</a></div>
+                    <iframe class="flappy-frame" src="flappy-bird/index.html" title="Flappy Bird game by noanonoa" loading="lazy"></iframe>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="footer">
@@ -213,6 +254,6 @@
 
     <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll back to top"></button>
 
-    <script src="script.js" defer></script>
+    <script src="script.js?v=3" defer></script>
 </body>
 </html>

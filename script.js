@@ -3,11 +3,80 @@
     const scrollToTopButton = document.getElementById('scroll-to-top');
     const navLinks = Array.from(document.querySelectorAll('.nav-tabs a'));
     const fadeElements = document.querySelectorAll('.topic-title, .topic-card');
+    const scrollProgress = document.getElementById('scroll-progress');
+    const themeToggle = document.getElementById('theme-toggle');
 
     let lastScroll = window.scrollY;
     let scrollTicking = false;
     let tabNavigationActive = false;
     let tabNavigationTimeout;
+
+    const toggleTheme = () => {
+        const lightMode = document.body.classList.toggle('light-mode');
+        themeToggle.setAttribute('aria-label', lightMode ? 'Switch to dark mode' : 'Switch to light mode');
+        themeToggle.firstElementChild.textContent = lightMode ? '\u263e' : '\u2609';
+        window.localStorage.setItem('melvin-theme', lightMode ? 'light' : 'dark');
+        document.dispatchEvent(new Event('themechange'));
+    };
+
+    const restoreTheme = () => {
+        if (window.localStorage.getItem('melvin-theme') === 'light') {
+            themeToggle.click();
+        }
+    };
+
+    const addCardHandles = () => {
+        document.querySelectorAll('.topic-card').forEach((card) => {
+            const handle = document.createElement('button');
+            handle.className = 'card-resize-handle';
+            handle.type = 'button';
+            handle.setAttribute('aria-label', 'Drag to resize and rotate this card');
+            handle.innerHTML = '<span aria-hidden="true"></span>';
+            card.appendChild(handle);
+
+            handle.addEventListener('pointerdown', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const bounds = card.getBoundingClientRect();
+                const startAngle = Math.atan2(event.clientY - bounds.top - bounds.height / 2, event.clientX - bounds.left - bounds.width / 2);
+                const startWidth = bounds.width;
+                const startHeight = bounds.height;
+                const startRotation = Number(card.dataset.rotation || 0);
+
+                card.classList.add('is-manipulating');
+                handle.setPointerCapture(event.pointerId);
+
+                const moveCard = (moveEvent) => {
+                    const distanceX = moveEvent.clientX - event.clientX;
+                    const distanceY = moveEvent.clientY - event.clientY;
+                    const angle = Math.atan2(moveEvent.clientY - bounds.top - bounds.height / 2, moveEvent.clientX - bounds.left - bounds.width / 2);
+                    const rotation = startRotation + ((angle - startAngle) * 180) / Math.PI;
+                    const width = Math.max(180, startWidth + distanceX * 2);
+                    const height = Math.max(130, startHeight + distanceY * 2);
+
+                    card.style.width = `${width}px`;
+                    card.style.height = `${height}px`;
+                    card.style.transform = `rotate(${rotation}deg)`;
+                    card.dataset.rotation = rotation;
+                };
+
+                const stopMovingCard = () => {
+                    card.classList.remove('is-manipulating');
+                    if (handle.hasPointerCapture(event.pointerId)) {
+                        handle.releasePointerCapture(event.pointerId);
+                    }
+                    handle.removeEventListener('pointermove', moveCard);
+                    handle.removeEventListener('pointerup', stopMovingCard);
+                    handle.removeEventListener('pointercancel', stopMovingCard);
+                };
+
+                handle.addEventListener('pointermove', moveCard);
+                handle.addEventListener('pointerup', stopMovingCard);
+                handle.addEventListener('pointercancel', stopMovingCard);
+            });
+        });
+    };
 
     const finishTabNavigation = () => {
         tabNavigationActive = false;
@@ -33,6 +102,16 @@
         }
     };
 
+    const updateScrollProgress = () => {
+        if (!scrollProgress) {
+            return;
+        }
+
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        scrollProgress.style.width = `${progress}%`;
+    };
+
     const scrollToTop = () => {
         window.scrollTo({
             top: 0,
@@ -43,6 +122,7 @@
     if (scrollToTopButton) {
         scrollToTopButton.addEventListener('click', scrollToTop);
     }
+    themeToggle.addEventListener('click', toggleTheme);
     const updateScrollControls = () => {
         const currentScroll = window.scrollY;
         const scrollDifference = currentScroll - lastScroll;
@@ -90,6 +170,19 @@
 
         if (card) {
             createRipple(card, event);
+        }
+    };
+
+    const preventSpaceScroll = (event) => {
+        if (event.code !== 'Space') {
+            return;
+        }
+
+        const target = event.target;
+        const isFormControl = target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement;
+
+        if (!isFormControl) {
+            event.preventDefault();
         }
     };
 
@@ -157,6 +250,7 @@
             window.requestAnimationFrame(() => {
                 updateScrollControls();
                 toggleScrollToTop();
+                updateScrollProgress();
                 updateActiveTab();
                 scrollTicking = false;
             });
@@ -165,9 +259,13 @@
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('keydown', preventSpaceScroll);
     window.addEventListener('resize', updateActiveTab);
     navTabs.addEventListener('click', handleNavClick);
     main.addEventListener('click', handleMainClick);
     observeFadeElements();
+    addCardHandles();
     toggleScrollToTop();
+    updateScrollProgress();
     updateActiveTab();
+    restoreTheme();
